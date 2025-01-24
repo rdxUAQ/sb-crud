@@ -1,4 +1,4 @@
-package com.sb.app.schemas;
+package com.sb.app.sb_crud.schemas;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -10,17 +10,17 @@ public class ProductSchema {
 
     
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "{NotEmpty.productschema.name}")
+    @NotEmpty(message = "{NotEmpty.productschema.name}")
     @Size(min = 3, max = 50 )
     private String name;
 
-    @Min(value = 0)
-    @NotNull
+    @Min(value = 0, message = "{NotNull.product.price}")
+    @NotNull(message = "{NotNull.product.price}")
     private Long price;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "{NotEmpty.product.inscription}")
+    @NotEmpty(message = "{NotEmpty.product.inscription}")
     private String inscription;
 
     // Constructor sin argumentos

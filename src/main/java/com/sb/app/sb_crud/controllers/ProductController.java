@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sb.app.sb_crud.ProductValidation;
+import com.sb.app.sb_crud.consts.ErrorMessages;
 import com.sb.app.sb_crud.entities.Product;
+import com.sb.app.sb_crud.schemas.ProductSchema;
 import com.sb.app.sb_crud.services.ProductService;
-import com.sb.app.schemas.ProductSchema;
 
 import jakarta.validation.Valid;
 
@@ -34,6 +36,8 @@ public class ProductController {
     
     @Autowired
     private ProductService _productService;
+    @Autowired
+    private ProductValidation _productValidation;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllProducts(){
@@ -62,7 +66,10 @@ public class ProductController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveProduct( @Valid @RequestBody Product product, BindingResult result) {
+        //custom validation
+        _productValidation.validate(product, result);
 
+        
         if(result.hasFieldErrors()){
             return validation(result);
         }
@@ -75,14 +82,16 @@ public class ProductController {
 
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateProduct( @Valid @RequestBody ProductSchema productSchema, BindingResult resultB, @PathVariable Long id) {
-        
+        //custom val
+        _productValidation.validate(productSchema, resultB);
+
         if(resultB.hasFieldErrors()){
             return validation(resultB);
         }
         var result = _productService.update(id, productSchema);
 
         if(result == null){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorMessages.EntityNotFound);
         }
        
         return ResponseEntity.ok().build();
@@ -122,9 +131,5 @@ public class ProductController {
 
     }
     
-    
-    
-    
-
 
 }

@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -32,7 +31,7 @@ public class Product {
 
     @NotBlank
     @NotEmpty
-    private String Inscription;
+    private String inscription;
     
     public Product() {
     }
@@ -54,10 +53,10 @@ public class Product {
         this.price = price;
     }
     public String getInscription() {
-        return Inscription;
+        return inscription;
     }
     public void setInscription(String inscription) {
-        Inscription = inscription;
+        this.inscription = inscription;
     } 
 
     

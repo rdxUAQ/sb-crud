@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sb.app.sb_crud.entities.Product;
 import com.sb.app.sb_crud.repositories.ProductRepository;
-import com.sb.app.schemas.ProductSchema;
+import com.sb.app.sb_crud.schemas.ProductSchema;
 
 
 

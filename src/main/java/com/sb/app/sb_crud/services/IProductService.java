@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sb.app.sb_crud.entities.Product;
-import com.sb.app.schemas.ProductSchema;
+import com.sb.app.sb_crud.schemas.ProductSchema;
 
 public interface IProductService {
 
