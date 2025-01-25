@@ -1,8 +1,10 @@
 package com.sb.app.sb_crud.entities;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.sql.results.graph.collection.internal.SetInitializer;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +16,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
@@ -24,8 +28,12 @@ public class User {
     private Long id;
 
     @Column(unique = true)
+    @NotBlank
+    @NotEmpty
     private String username; 
 
+    @NotBlank
+    @NotEmpty
     private String password;
 
     private Boolean enabled;
@@ -42,11 +50,11 @@ public class User {
         inverseJoinColumns = @JoinColumn(name="role_id"),
         uniqueConstraints = {@UniqueConstraint(columnNames={"user_id", "role_id"})}
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     
 
-    public User(String username, String password, Boolean enabled, List<Role> roles) {
+    public User(String username, String password, Boolean enabled, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -77,11 +85,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

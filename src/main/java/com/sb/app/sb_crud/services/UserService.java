@@ -1,8 +1,10 @@
 package com.sb.app.sb_crud.services;
 
-import java.util.ArrayList;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +40,7 @@ public class UserService implements IUserService{
 
         Optional<Role> optionalRoleUser = _RoleRepository.findByName("ROLE_USER");
 
-        List<Role> roles = new ArrayList<>();
+        Set<Role> roles = new HashSet<>();
 
 
         //optionalRoleUser.ifPresent(role -> roles.add(role));
