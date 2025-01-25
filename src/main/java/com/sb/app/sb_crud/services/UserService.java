@@ -25,6 +25,7 @@ public class UserService implements IUserService{
     @Autowired
     private RoleRepository _RoleRepository;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
