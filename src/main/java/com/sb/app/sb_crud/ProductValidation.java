@@ -1,6 +1,5 @@
 package com.sb.app.sb_crud;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

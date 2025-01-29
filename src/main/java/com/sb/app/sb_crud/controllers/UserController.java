@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sb.app.sb_crud.consts.ErrorMessages;
 import com.sb.app.sb_crud.entities.User;
 import com.sb.app.sb_crud.services.UserService;
 
@@ -35,13 +36,30 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> getMethodName(@Valid @RequestBody User user, BindingResult result){
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user, BindingResult result){
 
         if(result.hasFieldErrors()){
             return validation(result);
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(_userService.save(user));
+        
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
+
+        if(result.hasFieldErrors()){
+            return validation(result);
+        }
+
+        user.setAdmin(false);
+
+        var saved = _userService.save(user);
+
+        if(saved == null) return ResponseEntity.status(HttpStatus.CONFLICT).body(ErrorMessages.EntityUsernameRegistered);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
         
     }
 

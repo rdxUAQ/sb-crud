@@ -1,10 +1,12 @@
 package com.sb.app.sb_crud.entities;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.annotations.ManyToAny;
-import org.hibernate.sql.results.graph.collection.internal.SetInitializer;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +36,10 @@ public class User {
 
     @NotBlank
     @NotEmpty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Boolean enabled;
 
     //flags exclueded from jpa
@@ -43,6 +47,8 @@ public class User {
     private boolean isAdmin;
 
     //relations
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnoreProperties({"users", "handler", "hibernateLazyInitializer"})
     @ManyToAny
     @JoinTable(
         name="users_roles",
@@ -53,6 +59,10 @@ public class User {
     private Set<Role> roles;
 
     
+
+    public User() {
+        roles = new HashSet<>();
+    }
 
     public User(String username, String password, Boolean enabled, Set<Role> roles) {
         this.username = username;
@@ -103,9 +113,41 @@ public class User {
 
     public void setAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (username == null) {
+            if (other.username != null)
+                return false;
+        } else if (!username.equals(other.username))
+            return false;
+        return true;
     } 
     
 
+    
     
 
 }

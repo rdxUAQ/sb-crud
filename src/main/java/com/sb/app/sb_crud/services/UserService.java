@@ -39,6 +39,12 @@ public class UserService implements IUserService{
     @Transactional
     public User save(User user) {
 
+        //validation
+        if(_UserRepository.findByUserNameName(user.getUsername()) != null){
+
+            return null;
+        }
+
         Optional<Role> optionalRoleUser = _RoleRepository.findByName("ROLE_USER");
 
         Set<Role> roles = new HashSet<>();

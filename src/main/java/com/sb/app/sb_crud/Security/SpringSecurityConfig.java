@@ -2,6 +2,7 @@ package com.sb.app.sb_crud.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +22,8 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("api/v1/users/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/v1/users/all").permitAll()
+                .requestMatchers(HttpMethod.POST,"api/v1/users/register").permitAll()
                 .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable())
